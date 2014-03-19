@@ -1,4 +1,6 @@
 WSI4URLang
 ==========
 
-WSI for under-resourced languages
+Word Sense Induction (WSI) for Under-resourced Languages (URLang)
+
+http://www.mohammadnasiruddin.eu/under-resourced-language-urlang.html
