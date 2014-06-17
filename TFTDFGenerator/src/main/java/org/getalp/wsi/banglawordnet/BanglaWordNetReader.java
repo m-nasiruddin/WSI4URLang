@@ -1,23 +1,21 @@
 package org.getalp.wsi.banglawordnet;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
-
 
 public class BanglaWordNetReader {
     public Map<Integer, Integer> hMSensesFileSenseIDs = new HashMap<>();
     public Map<Integer, String> hMSensesFileSenses = new HashMap<>();
     public Map<Integer, String> hMSensesFileSensesPOSTags = new HashMap<>();
     public Map<Integer, Integer> hMSensesFileSynsetIDs = new HashMap<>();
-
-    ArrayList<String> aLSensesFileSenses = new ArrayList<String>();
     public List<List<String>> aLSensesFileTopics = new ArrayList<>();
-
     public Map<Integer, Integer> hMGlossesFileSynsetIDs = new HashMap<>();
     public Map<Integer, String> hMGlossesFileDefinitions = new HashMap<>();
     public Map<Integer, String> hMGlossesFileExamples = new HashMap<>();
-
     public Map<Integer, String> hMTopics = new HashMap<>();
+    ArrayList<String> aLSensesFileSenses = new ArrayList<String>();
 
     public static void main(String[] args) throws IOException {
         if (args.length < 2) {
@@ -62,23 +60,23 @@ public class BanglaWordNetReader {
         for (String topic : uniqueList) {
             System.out.println(topic);
         }
-            //String sense = hMSensesFileTopics.get(topic);
-            //if (sense != null) {
-                //System.out.println(topic + "\t" + sense);
-            //}
+        //String sense = hMSensesFileTopics.get(topic);
+        //if (sense != null) {
+        //System.out.println(topic + "\t" + sense);
+        //}
         //}
 
         //Creates "subTopics.txt" file.
         //Map<String, Integer> counts = new HashMap<>();
         //for(String currentWord : hMSensesFileSenses.) {
-            //if(counts.containsKey(currentWord)){
-                //counts.put(currentWord, 0);
-            //}
-            //counts.put(currentWord, counts.get(currentWord)+1);
+        //if(counts.containsKey(currentWord)){
+        //counts.put(currentWord, 0);
+        //}
+        //counts.put(currentWord, counts.get(currentWord)+1);
         //}
 
         //for (Map.Entry<String, Integer> entry : counts.entrySet()) {
-            //System.out.println("Key = " + entry.getValue() + ", Value = " + entry.getKey());
+        //System.out.println("Key = " + entry.getValue() + ", Value = " + entry.getKey());
         //}
     }
 

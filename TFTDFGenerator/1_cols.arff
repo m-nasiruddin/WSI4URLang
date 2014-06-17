@@ -1,20 +1,20 @@
 @relation wordsenses
 
-@attribute terms {বাংলাদেশের, ও, ভারতের, অধিকাংশ, মানুষের, প্রধান, খাদ্য, প্রধানত, সাদা, রং, এর, হয়}
-@attribute ভাত#0 real
-@attribute ভাত#1 real
+@attribute instances {ভাত#0, ভাত#1}
+@attribute বাংলাদেশের real
+@attribute ও real
+@attribute ভারতের real
+@attribute অধিকাংশ real
+@attribute মানুষের real
+@attribute প্রধান real
+@attribute খাদ্য real
+@attribute প্রধানত real
+@attribute সাদা real
+@attribute রং real
+@attribute এর real
+@attribute হয় real
 
 
 @data
-বাংলাদেশের,1,0
-ও,1,0
-ভারতের,1,0
-অধিকাংশ,1,0
-মানুষের,1,0
-প্রধান,1,0
-খাদ্য,1,0
-প্রধানত,0,1
-সাদা,0,1
-রং,0,1
-এর,0,1
-হয়,0,1
+ভাত#0,1,1,1,1,1,1,1,0,0,0,0,0
+ভাত#1,0,0,0,0,0,0,0,1,1,1,1,1

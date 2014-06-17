@@ -20,9 +20,9 @@ import java.util.*;
 public class TermTermDocumentMatrix {
     DoubleMatrix2D termTermMatrix;
     DoubleMatrix2D termTermMatrixView;
-    private Map<Integer, WordDocumentPair> wordDocumentPairIndexView;
     List<List<String>> documents;
     List<WordDocumentPair> currentSentenceProcessed;
+    private Map<Integer, WordDocumentPair> wordDocumentPairIndexView;
     //DefinitionNormalizer normalizer;
     private List<List<Integer>> wordDocumentIndex;
     private Map<Integer, WordDocumentPair> wordDocumentPairIndex;
@@ -65,12 +65,6 @@ public class TermTermDocumentMatrix {
             at.loadWordList(args[1]);
         }
         at.processCorpus(sts);
-        //PrintStream ps = new PrintStream("BanglaMatrixSparse.csv", "UTF-8");
-        PrintStream wordps = new PrintStream("BanglaWords.dat", "UTF-8");
-        //at.printThesaurusSparse(ps, true);
-        at.printWords(wordps);
-        //ps.flush();
-        //ps.close();
     }
 
     public void loadWordList(String filename) throws IOException {
@@ -95,49 +89,47 @@ public class TermTermDocumentMatrix {
 
     public void computeCounts(/*int documentIndex*/) {
 
-            DoubleMatrix2D termTermMatrix;
-            Map<Integer, WordDocumentPair> wordDocumentPairIndex;
-            Map<WordDocumentPair, Integer> inverseWordDocumentPairIndex;
-            if (termTermMatrixView == null) {
-                termTermMatrix = this.termTermMatrix;
-                wordDocumentPairIndex = this.wordDocumentPairIndex;
-                inverseWordDocumentPairIndex = this.inverseWordDocumentPairIndex;
-            } else {
-                termTermMatrix = termTermMatrixView;
-                wordDocumentPairIndex = wordDocumentPairIndexView;
-                inverseWordDocumentPairIndex = this.inverseWordDocumentPairIndexView;
-            }
-            currentSentenceProcessed = new ArrayList<WordDocumentPair>();
-            int percentage = 0;
-            long startTime = System.currentTimeMillis();
-            for (int j = 0; j < termTermMatrix.columns(); j++) {
-                System.out.print("Mem["
-                        + ((runtime.totalMemory() - runtime.freeMemory()) / mb)
-                        + "m / " + (runtime.totalMemory() / mb) + "m]  ");
-                System.out.print("Instance " + j
-                        + "                              \r");
-                WordDocumentPair wp = wordDocumentPairIndex.get(j);
-                String cw = wp.getWord();
-                for (String s : documents.get(wp.documentIndex)) {
-                    if (wordListFilter.contains(cw)) {
-                        int currentIndex = wordIndex.get(s);
-                        double value = termTermMatrix.getQuick(currentIndex, inverseWordDocumentPairIndex.get(wp));
-                        termTermMatrix.setQuick(currentIndex, inverseWordDocumentPairIndex.get(wp), ++value);
-                    }
-                }
-                if (documents.get(wp.documentIndex).contains(cw) && wordListFilter.contains(cw)) {
-                    double value = termTermMatrix.getQuick(wordIndex.get(cw), inverseWordDocumentPairIndex.get(wp));
-                    termTermMatrix.setQuick(wordIndex.get(cw), inverseWordDocumentPairIndex.get(wp), --value);
-                }
-                if ((((double) j / (double) termTermMatrix.columns()) * 100d > percentage + 1)) {
-
-                    System.err.println(String.format("%.2f", ((double) j / (double) termTermMatrix.columns()) * 100d) + "% - " + String.format("%d ms", System.currentTimeMillis() - startTime));
-                    percentage++;
-                    startTime = System.currentTimeMillis();
+        DoubleMatrix2D termTermMatrix;
+        Map<Integer, WordDocumentPair> wordDocumentPairIndex;
+        Map<WordDocumentPair, Integer> inverseWordDocumentPairIndex;
+        if (termTermMatrixView == null) {
+            termTermMatrix = this.termTermMatrix;
+            wordDocumentPairIndex = this.wordDocumentPairIndex;
+            inverseWordDocumentPairIndex = this.inverseWordDocumentPairIndex;
+        } else {
+            termTermMatrix = termTermMatrixView;
+            wordDocumentPairIndex = wordDocumentPairIndexView;
+            inverseWordDocumentPairIndex = this.inverseWordDocumentPairIndexView;
+        }
+        currentSentenceProcessed = new ArrayList<WordDocumentPair>();
+        int percentage = 0;
+        long startTime = System.currentTimeMillis();
+        for (int j = 0; j < termTermMatrix.columns(); j++) {
+            System.out.print("Mem["
+                    + ((runtime.totalMemory() - runtime.freeMemory()) / mb)
+                    + "m / " + (runtime.totalMemory() / mb) + "m]  ");
+            System.out.print("Instance " + j
+                    + "                              \r");
+            WordDocumentPair wp = wordDocumentPairIndex.get(j);
+            String cw = wp.getWord();
+            for (String s : documents.get(wp.documentIndex)) {
+                if (wordListFilter.contains(cw)) {
+                    int currentIndex = wordIndex.get(s);
+                    double value = termTermMatrix.getQuick(currentIndex, inverseWordDocumentPairIndex.get(wp));
+                    termTermMatrix.setQuick(currentIndex, inverseWordDocumentPairIndex.get(wp), ++value);
                 }
             }
+            if (documents.get(wp.documentIndex).contains(cw) && wordListFilter.contains(cw)) {
+                double value = termTermMatrix.getQuick(wordIndex.get(cw), inverseWordDocumentPairIndex.get(wp));
+                termTermMatrix.setQuick(wordIndex.get(cw), inverseWordDocumentPairIndex.get(wp), --value);
+            }
+            if ((((double) j / (double) termTermMatrix.columns()) * 100d > percentage + 1)) {
 
-
+                System.err.println(String.format("%.2f", ((double) j / (double) termTermMatrix.columns()) * 100d) + "% - " + String.format("%d ms", System.currentTimeMillis() - startTime));
+                percentage++;
+                startTime = System.currentTimeMillis();
+            }
+        }
     }
 
     public void buildIndexes(String s, int documentIndex) {
@@ -239,66 +231,55 @@ public class TermTermDocumentMatrix {
         return termTermMatrixViewNew;
     }
 
-    public void printThesaurusSparse(PrintStream os, boolean printHeader) {
-        DoubleMatrix2D termTermMatrix;
-        Map<Integer, WordDocumentPair> wordDocumentPairIndex;
-        if (termTermMatrixView == null) {
-            termTermMatrix = this.termTermMatrix;
-            wordDocumentPairIndex = this.wordDocumentPairIndex;
-        } else {
-            termTermMatrix = termTermMatrixView;
-            wordDocumentPairIndex = wordDocumentPairIndexView;
-        }
-        os.println(termTermMatrix.toString());
-    }
-
-    public void printWords(PrintStream os) {
-        DoubleMatrix2D termTermMatrix;
-        Map<Integer, WordDocumentPair> wordDocumentPairIndex;
-        if (termTermMatrixView == null) {
-            termTermMatrix = this.termTermMatrix;
-            wordDocumentPairIndex = this.wordDocumentPairIndex;
-        } else {
-            termTermMatrix = termTermMatrixView;
-            wordDocumentPairIndex = wordDocumentPairIndexView;
-        }
-        for (int i = 0; i < termTermMatrix.columns(); i++) {
-            os.println(wordDocumentPairIndex.get(i).getWord());
-        }
-    }
-
     public void printThesaurusWeka(PrintWriter os, boolean printHeader, DoubleMatrix2D matrix) {
         DoubleMatrix2D termTermMatrix;
         Map<Integer, WordDocumentPair> wordDocumentPairIndex;
         termTermMatrix = matrix;
         wordDocumentPairIndex = wordDocumentPairIndexView;
-        System.out.println("Writing Term Term Document matrix to disk...");
-        int percentage = 0;
-        os.println("@relation wordsenses\n");
+
         List<Integer> ignored = new ArrayList<>();
-        StringBuilder dataBuilder = new StringBuilder();
         for (int i = 0; i < termTermMatrix.rows(); i++) {
             StringBuilder col = new StringBuilder();
-            col.append(wordInvertedIndex.get(i) + ",");
             int zeroCount = 0;
-
             for (int j = 0; j < termTermMatrix.columns(); j++) {
                 double value = termTermMatrix.getQuick(i, j);
                 if (value == 0) {
                     zeroCount++;
                 }
-                if (j < termTermMatrix.columns() - 1) {
-                    col.append(String.format("%d,", (int) termTermMatrix.getQuick(i, j)));
-                } else {
-                    col.append(String.format("%d", (int) termTermMatrix.getQuick(i, j)));
+            }
+            if (zeroCount == termTermMatrix.columns()) {
+                ignored.add(i);
+            }
+        }
+
+
+        System.out.println("Writing Term Term Document matrix to disk...");
+        int percentage = 0;
+        os.println("@relation wordsenses\n");
+        StringBuilder dataBuilder = new StringBuilder();
+        for (int i = 0; i < termTermMatrix.columns(); i++) {
+            StringBuilder col = new StringBuilder();
+            col.append(wordDocumentPairIndex.get(i) + ",");
+            int zeroCount = 0;
+            for (int j = 0; j < termTermMatrix.rows(); j++) {
+                if (!ignored.contains(j)) {
+                    if (j < termTermMatrix.rows() - 1) {
+                        col.append(String.format("%d,", (int) termTermMatrix.getQuick(j, i)));
+                    } else {
+                        col.append(String.format("%d", (int) termTermMatrix.getQuick(j, i)));
+                    }
                 }
             }
+            String colstr = col.toString();
+            colstr = colstr.trim();
+            if (colstr.endsWith(",")) {
+                colstr = colstr.substring(0, colstr.length() - 1);
+            }
             if (zeroCount != termTermMatrix.columns()) {
-                dataBuilder.append(col.toString() + "\n");
+                dataBuilder.append(colstr + "\n");
             } else {
                 ignored.add(i);
             }
-
             if (((double) i / (double) termTermMatrix.rows()) * 100 > (double) (percentage + 1)) {
                 System.out.print("Mem["
                         + ((runtime.totalMemory() - runtime.freeMemory()) / mb)
@@ -308,24 +289,21 @@ public class TermTermDocumentMatrix {
                 percentage++;
             }
         }
-        String worattr = "@attribute terms {";
-        for (int i = 0; i < termTermMatrix.rows(); i++) {
-            if (!ignored.contains(i)) {
-                if (i < termTermMatrix.rows() - 1) {
-                    worattr += String.format("%s, ", wordInvertedIndex.get(i));
-                } else {
-                    worattr += String.format("%s", wordInvertedIndex.get(i));
-                }
+        String worattr = "@attribute instances {";
+        for (int i = 0; i < termTermMatrix.columns(); i++) {
+
+            if (i < termTermMatrix.columns() - 1) {
+                worattr += String.format("%s, ", wordDocumentPairIndex.get(i));
+            } else {
+                worattr += String.format("%s", wordDocumentPairIndex.get(i));
             }
-        }
-        worattr = worattr.trim();
-        if (worattr.endsWith(",")) {
-            worattr = worattr.substring(0, worattr.length() - 1);
         }
         worattr += "}";
         os.println(worattr);
-        for (int j = 0; j < termTermMatrix.columns(); j++) {
-            os.println("@attribute " + wordDocumentPairIndex.get(j) + " real");
+        for (int j = 0; j < termTermMatrix.rows(); j++) {
+            if (!ignored.contains(j)) {
+                os.println("@attribute " + wordInvertedIndex.get(j) + " real");
+            }
         }
         os.println();
         os.println("\n@data");

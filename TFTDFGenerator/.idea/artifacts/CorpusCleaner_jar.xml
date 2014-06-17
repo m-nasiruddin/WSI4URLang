@@ -1,0 +1,26 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="CorpusCleaner:jar">
+    <output-path>$PROJECT_DIR$/</output-path>
+    <root id="archive" name="BanglaWordNetReader.jar">
+      <element id="module-output" name="BanglaWordNetReader" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/junit/junit/4.10/junit-4.10.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/net/sourceforge/jtransforms/jtransforms/2.4.0/jtransforms-2.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/wcohen/secondstring/20120620/secondstring-20120620.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/googlecode/netlib-java/netlib-java/0.9.3/netlib-java-0.9.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/github/rwl/JKLU/1.0.0/JKLU-1.0.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/net/sourceforge/parallelcolt/parallelcolt/0.10.0/parallelcolt-0.10.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/net/sourceforge/jplasma/jplasma/1.2.0/jplasma-1.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/github/rwl/AMDJ/1.0.1/AMDJ-1.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/net/sourceforge/jplasma/core-lapack/0.1/core-lapack-0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/net/sourceforge/parallelcolt/optimization/1.0/optimization-1.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/github/rwl/COLAMDJ/1.0.1/COLAMDJ-1.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/commons-collections/commons-collections/3.2/commons-collections-3.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/wcohen/cls/20120620/cls-20120620.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/cbrind/jwf/1.0.1/jwf-1.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/net/sourceforge/f2j/arpack_combined_all/0.1/arpack_combined_all-0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/net/sourceforge/csparsej/csparsej/1.1.1/csparsej-1.1.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/github/rwl/BTFJ/1.0.1/BTFJ-1.0.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
